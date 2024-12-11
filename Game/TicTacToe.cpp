@@ -3,11 +3,14 @@
 //
 
 #include "TicTacToe.h"
+#include "../Network/Network.h"
 
 #include <iostream>
 #include <limits>
 #include <ostream>
 #include <thread>
+
+
 using namespace std;
 
 constexpr int WIN_WEIGHT = 200;
@@ -224,7 +227,35 @@ void TicTacToe::playerVsPlayerLocal() {
         else cout << "Player 2 wins!" << endl;
     }
 }
-void TicTacToe::playerVsPlayerOnline() {}
+void TicTacToe::playerVsPlayerOnline() {
+    Network network;
+    char mode;
+
+    while (mode!=1 && mode!=2) {
+        cout << "Select mode: 1) Hosting, 2) Joining" << endl;
+        cin >> mode;
+        if (mode==1) {
+            network.startServer(1234);
+        } else if (mode==2){
+            string host;
+            cout << "Enter host IP: ";
+            cin >> host;
+            network.connectToServer(host, 1234);
+        } else {
+            cout << "Invalid input!";
+        }
+    }
+
+    string message;
+    cout << "Type a message to send: ";
+    cin.ignore();
+    getline(cin, message);
+    network.sendMessage(message);
+
+    string response = network.receiveMessage();
+    cout << "Received: " << response << endl;
+
+}
 TicTacToe::~TicTacToe() {
 }
 

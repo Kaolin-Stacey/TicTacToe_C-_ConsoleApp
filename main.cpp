@@ -1,5 +1,4 @@
-#include <iostream>
-#include "TicTacToe.h"
+#include "Game/TicTacToe.h"
 
 int main() {
     TicTacToe ttt = TicTacToe('X','O');

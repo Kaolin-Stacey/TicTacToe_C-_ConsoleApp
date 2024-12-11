@@ -22,7 +22,7 @@ private:
     void playerVsAi();
     void playerVsPlayerLocal();
     void playerVsPlayerOnline();
-    char board[3][3] = {{" "}};
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
     void play(int row, int col);
     int turn {};
     void askPlayerForInput();
@@ -52382,11 +52382,11 @@ void TicTacToe::askPlayerForInput() {
 }
 void TicTacToe::AI_turn() {
 
+    cout << "Turn " << turn << ": AI " << endl;
     cout << endl << "AI is thinking..." << endl;
     this_thread::sleep_for(chrono::seconds(1));
     int row, col;
     find_best_move(row, col);
-    cout << "AI plays at row " << row+1 << " and column " << col+1 << endl;
     play(row, col);
 }
 void TicTacToe::find_best_move(int &row, int &col) {
@@ -52394,12 +52394,14 @@ void TicTacToe::find_best_move(int &row, int &col) {
     int best_move_row = -1;
     int best_move_col = -1;
 
+    bool found_valid_move = false;
+
 
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (board[i][j] == ' ') {
+                found_valid_move = true;
                 int weight = determine_weight_of_move(i, j);
-                cout << "Weight of move at row " << i+1 << " and column " << j+1 << ": " << weight << endl;
 
 
                 if (weight > best_move_weight) {
@@ -52412,11 +52414,12 @@ void TicTacToe::find_best_move(int &row, int &col) {
     }
 
 
-    if (best_move_row == -1 || best_move_col == -1) {
+    if (!found_valid_move) {
         cerr << "Error: No valid moves found!" << endl;
     } else {
         row = best_move_row;
         col = best_move_col;
+        cout << "Best move is at row " << row + 1 << " and column " << col + 1 << endl;
     }
 }
 int TicTacToe::determine_weight_of_move(int row, int col) {
@@ -52443,14 +52446,21 @@ int TicTacToe::determine_weight_of_move(int row, int col) {
 
     return weight;
 }
-
-
 void TicTacToe::playerVsAi() {
     while (!gameover()) {
         printBoard();
-        if (player()==Player1) askPlayerForInput();
-        else AI_turn();
+        if (player() == Player1) {
+            askPlayerForInput();
+        } else {
+            AI_turn();
+        }
         turn++;
+    }
+    printBoard();
+    if (winner==' ') cout << "It's a tie!" << endl;
+    else {
+        if (winner==Player1) cout << "Player 1 wins!" << endl;
+        else cout << "AI wins!" << endl;
     }
 }
 void TicTacToe::playerVsPlayerLocal() {

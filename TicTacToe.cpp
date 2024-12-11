@@ -11,13 +11,12 @@
 using namespace std;
 
 constexpr int WIN_WEIGHT = 200;
-constexpr int BLOCK_WEIGHT = 90;
-constexpr int FORK_WEIGHT = 75;
-constexpr int FORK_BLOCK_WEIGHT = 200;
+constexpr int BLOCK_WEIGHT = 90; // the weight of blocking an opponent from a win
+constexpr int FORK_WEIGHT = 75; // not implemented
+constexpr int FORK_BLOCK_WEIGHT = 200; // not implemented
 constexpr int CENTRE_WEIGHT = 75;
 constexpr int CORNER_WEIGHT = 40;
 constexpr int EDGE_WEIGHT = 10;
-
 
 TicTacToe::TicTacToe(char player1, char player2) {
     Player1 = player1;
@@ -100,7 +99,6 @@ char TicTacToe::check_win_condition() {
 void TicTacToe::printBoard() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            // Print the cell with consistent alignment
             cout << " " << board[i][j] << " ";
             if (j < 2) cout << "|"; // Vertical divider
         }
@@ -133,11 +131,11 @@ void TicTacToe::askPlayerForInput() {
 }
 void TicTacToe::AI_turn() {
     // AI will always be Player2
+    cout << "Turn " << turn << ": AI " << endl;
     cout << endl << "AI is thinking..." << endl;
     this_thread::sleep_for(chrono::seconds(1));
     int row, col;
     find_best_move(row, col);
-    cout << "AI plays at row " << row+1 << " and column " << col+1 << endl;
     play(row, col);
 }
 void TicTacToe::find_best_move(int &row, int &col) {
@@ -145,12 +143,14 @@ void TicTacToe::find_best_move(int &row, int &col) {
     int best_move_row = -1;
     int best_move_col = -1;
 
+    bool found_valid_move = false;  // Flag to track if we find any valid moves
+
     // Loop through the board to find the best possible move
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             if (board[i][j] == ' ') {  // Only consider empty spaces
+                found_valid_move = true;  // Found at least one valid move
                 int weight = determine_weight_of_move(i, j);
-                cout << "Weight of move at row " << i+1 << " and column " << j+1 << ": " << weight << endl;
 
                 // Update the best move if this one has a higher weight
                 if (weight > best_move_weight) {
@@ -162,8 +162,8 @@ void TicTacToe::find_best_move(int &row, int &col) {
         }
     }
 
-    // Check for a valid move
-    if (best_move_row == -1 || best_move_col == -1) {
+    // If no valid moves were found, output an error
+    if (!found_valid_move) {
         cerr << "Error: No valid moves found!" << endl;
     } else {
         row = best_move_row;
@@ -194,14 +194,21 @@ int TicTacToe::determine_weight_of_move(int row, int col) { // this is for AI on
 
     return weight;
 }
-
-
 void TicTacToe::playerVsAi() {
     while (!gameover()) {
         printBoard();
-        if (player()==Player1) askPlayerForInput();
-        else AI_turn();
-        turn++;
+        if (player() == Player1) {
+            askPlayerForInput();  // Player 1's turn
+        } else {
+            AI_turn();  // AI's turn
+        }
+        turn++;  // Increment turn after both moves are done
+    }
+    printBoard();
+    if (winner==' ') cout << "It's a tie!" << endl;
+    else {
+        if (winner==Player1) cout << "Player 1 wins!" << endl;
+        else cout << "AI wins!" << endl;
     }
 }
 void TicTacToe::playerVsPlayerLocal() {

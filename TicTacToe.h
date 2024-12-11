@@ -20,7 +20,7 @@ private:
     void playerVsAi();
     void playerVsPlayerLocal();
     void playerVsPlayerOnline();
-    char board[3][3] = {{" "}};
+    char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
     void play(int row, int col);
     int turn {};
     void askPlayerForInput();

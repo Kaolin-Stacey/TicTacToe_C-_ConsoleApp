@@ -22,4 +22,4 @@ add_executable(TicTacToe main.cpp
         Network/Network.cpp
         Network/Network.h)
 
-target_link_libraries(TicTacToe PRIVATE Boost::asio)
+target_link_libraries(TicTacToe PRIVATE Boost::asio ws2_32)

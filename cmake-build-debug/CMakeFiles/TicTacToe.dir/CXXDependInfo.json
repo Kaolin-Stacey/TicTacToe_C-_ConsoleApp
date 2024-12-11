@@ -1,0 +1,21 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"dir-cur-bld" : "C:/Users/kaoli/CLionProjects/TicTacToe/cmake-build-debug",
+	"dir-cur-src" : "C:/Users/kaoli/CLionProjects/TicTacToe",
+	"dir-top-bld" : "C:/Users/kaoli/CLionProjects/TicTacToe/cmake-build-debug",
+	"dir-top-src" : "C:/Users/kaoli/CLionProjects/TicTacToe",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"C:\\Libraries\\vcpkg\\installed\\x64-windows\\include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "C:/Users/kaoli/CLionProjects/TicTacToe/cmake-build-debug/CMakeFiles/TicTacToe.dir"
+}

@@ -2,7 +2,7 @@
 #include "TicTacToe.h"
 
 int main() {
-    TicTacToe ttt = TicTacToe();
+    TicTacToe ttt = TicTacToe('X','O');
     ttt.start();
     return 0;
 }

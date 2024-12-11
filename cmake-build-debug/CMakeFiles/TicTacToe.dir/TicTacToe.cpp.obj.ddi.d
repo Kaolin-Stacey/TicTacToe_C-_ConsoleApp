@@ -146,4 +146,25 @@ CMakeFiles\TicTacToe.dir\TicTacToe.cpp.obj.ddi: \
  C:/msys64/mingw64/include/c++/14.2.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/14.2.0/istream \
  C:/msys64/mingw64/include/c++/14.2.0/bits/istream.tcc \
- C:/msys64/mingw64/include/c++/14.2.0/limits
+ C:/msys64/mingw64/include/c++/14.2.0/limits \
+ C:/msys64/mingw64/include/c++/14.2.0/thread \
+ C:/msys64/mingw64/include/c++/14.2.0/stop_token \
+ C:/msys64/mingw64/include/c++/14.2.0/atomic \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_base.h \
+ C:/msys64/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
+ C:/msys64/mingw64/include/stdint.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_lockfree_defines.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_wait.h \
+ C:/msys64/mingw64/include/c++/14.2.0/cstdint \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_mutex.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/std_thread.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/unique_ptr.h \
+ C:/msys64/mingw64/include/c++/14.2.0/semaphore \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/semaphore_base.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/chrono.h \
+ C:/msys64/mingw64/include/c++/14.2.0/ratio \
+ C:/msys64/mingw64/include/c++/14.2.0/ctime \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/parse_numbers.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/atomic_timed_wait.h \
+ C:/msys64/mingw64/include/c++/14.2.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/semaphore.h

@@ -7,12 +7,23 @@
 #include <iostream>
 #include <limits>
 #include <ostream>
+#include <thread>
 using namespace std;
 
-TicTacToe::TicTacToe() {
+constexpr int WIN_WEIGHT = 200;
+constexpr int BLOCK_WEIGHT = 90;
+constexpr int FORK_WEIGHT = 75;
+constexpr int FORK_BLOCK_WEIGHT = 200;
+constexpr int CENTRE_WEIGHT = 75;
+constexpr int CORNER_WEIGHT = 40;
+constexpr int EDGE_WEIGHT = 10;
+
+
+TicTacToe::TicTacToe(char player1, char player2) {
+    Player1 = player1;
+    Player2 = player2;
     turn = 1;
 }
-
 void TicTacToe::start() {
     // Check what the player wants to do
     int option {};
@@ -47,7 +58,10 @@ void TicTacToe::play(int row, int col) {
     board[row][col] = player();
 }
 bool TicTacToe::gameover() {
-
+    winner = check_win_condition();
+    return winner != ' ' || turn > 9;
+}
+char TicTacToe::check_win_condition() {
     int diag_r_count = 0;
     int diag_l_count = 0;
 
@@ -58,76 +72,152 @@ bool TicTacToe::gameover() {
         for (int j=0; j < 3; j++) {
             // check right diagonal
             if (i==j) {
-                if (board[i][j]=='X') diag_r_count++;
-                if (board[i][j]=='O') diag_r_count--;
+                if (board[i][j]==Player1) diag_r_count++;
+                if (board[i][j]==Player2) diag_r_count--;
             }
             // check left diagonal
             if (i + j == 2) { // since possibilities: (0,2), (1,1), (2,0)
-                if (board[i][j] == 'X') diag_l_count++;
-                if (board[i][j] == 'O') diag_l_count--;
+                if (board[i][j] == Player1) diag_l_count++;
+                if (board[i][j] == Player2) diag_l_count--;
             }
             //check rows
-            if (board[i][j]=='X') row_count++;
-            if (board[i][j]=='O') row_count--;
+            if (board[i][j]==Player1) row_count++;
+            if (board[i][j]==Player2) row_count--;
 
             // check columns
-            if (board[j][i]=='X') col_count++;
-            if (board[j][i]=='O') col_count--;
+            if (board[j][i]==Player1) col_count++;
+            if (board[j][i]==Player2) col_count--;
         }
         if (row_count==3 || col_count==3 || diag_r_count==3 || diag_l_count==3) {
-            winner = 'X';
-            return true;
+            return Player1;
         }
         if (row_count==-3 || col_count==-3 || diag_r_count==-3 || diag_l_count==-3) {
-            winner = 'O';
-            return true;
+            return Player2;
         }
     }
-
-    if (turn>9) return true;
-    return false;
+    return ' ';
 }
 void TicTacToe::printBoard() {
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            // Print the cell with proper spacing
+            // Print the cell with consistent alignment
             cout << " " << board[i][j] << " ";
-            if (j < 2) cout << "|"; // Add vertical divider between cells
+            if (j < 2) cout << "|"; // Vertical divider
         }
         cout << endl;
-        if (i < 2) cout << "---+---+---" << endl; // Add horizontal divider between rows
+        if (i < 2) cout << "-----------" << endl; // Horizontal divider
     }
 }
 char TicTacToe::player() {
-    if (turn%2+1==1) return 'X';
-    return 'O';
+    if (turn%2+1==1) return Player2;
+    return Player1;
 }
+void TicTacToe::askPlayerForInput() {
+    int row, col;
 
-void TicTacToe::playerVsAi() {}
-void TicTacToe::playerVsPlayerLocal() {
-    while (!gameover()) {
+    while (true) {
         cout << "Turn " << turn << ": Player " << player() << endl;
         cout << "Select a row and column between 1 and 3 (ex. 2 1): ";
-        int row, col;
         cin >> row >> col;
         if (row<1 || row>3 || col<1 || col>3) {
             cout << endl <<  "Invalid input. Try again." << endl;
             continue;
         }
-        if (board[row-1][col-1] == 'X' || board[row-1][col-1] == 'O') {
+        if (board[row-1][col-1] == Player1 || board[row-1][col-1] == Player2) {
             cout << endl << "Cell already taken. Try again." << endl;
             continue;
         }
-        play(row-1,col-1);
+        break;
+    }
+    play(row-1,col-1);
+}
+void TicTacToe::AI_turn() {
+    // AI will always be Player2
+    cout << endl << "AI is thinking..." << endl;
+    this_thread::sleep_for(chrono::seconds(1));
+    int row, col;
+    find_best_move(row, col);
+    cout << "AI plays at row " << row+1 << " and column " << col+1 << endl;
+    play(row, col);
+}
+void TicTacToe::find_best_move(int &row, int &col) {
+    int best_move_weight = -1000;  // Start with a very low value to find the highest weight
+    int best_move_row = -1;
+    int best_move_col = -1;
+
+    // Loop through the board to find the best possible move
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (board[i][j] == ' ') {  // Only consider empty spaces
+                int weight = determine_weight_of_move(i, j);
+                cout << "Weight of move at row " << i+1 << " and column " << j+1 << ": " << weight << endl;
+
+                // Update the best move if this one has a higher weight
+                if (weight > best_move_weight) {
+                    best_move_weight = weight;
+                    best_move_row = i;
+                    best_move_col = j;
+                }
+            }
+        }
+    }
+
+    // Check for a valid move
+    if (best_move_row == -1 || best_move_col == -1) {
+        cerr << "Error: No valid moves found!" << endl;
+    } else {
+        row = best_move_row;
+        col = best_move_col;
+    }
+}
+int TicTacToe::determine_weight_of_move(int row, int col) { // this is for AI only, so it is automatically for Player2
+    int weight = 0;
+
+    // Check if the cell is already taken
+    if (board[row][col] != ' ') return 0;
+
+    // Check for possible win
+    board[row][col] = Player2;
+    if (check_win_condition() == Player2) weight += WIN_WEIGHT;
+
+    // Check for possible blocking
+    board[row][col] = Player1;
+    if (check_win_condition() == Player1) weight += BLOCK_WEIGHT;
+
+    // Reset the board position after checking
+    board[row][col] = ' ';
+
+    // Add positional weights (ensure the centre has the highest priority)
+    if (row == 1 && col == 1) weight += CENTRE_WEIGHT;  // Centre should have the highest weight
+    if ((row == 0 || row == 2) && (col == 0 || col == 2)) weight += CORNER_WEIGHT;  // Corner
+    if (((row == 0 || row == 2) && col == 1) || (row == 1 && (col == 0 || col == 2))) weight += EDGE_WEIGHT;  // Edge
+
+    return weight;
+}
+
+
+void TicTacToe::playerVsAi() {
+    while (!gameover()) {
         printBoard();
+        if (player()==Player1) askPlayerForInput();
+        else AI_turn();
         turn++;
     }
+}
+void TicTacToe::playerVsPlayerLocal() {
+    while (!gameover()) {
+        printBoard();
+        askPlayerForInput();
+        turn++;
+    }
+    printBoard();
     if (winner==' ') cout << "It's a tie!" << endl;
-    else cout << "Winner: " << winner << endl;
+    else {
+        if (winner==Player1) cout << "Player 1 wins!" << endl;
+        else cout << "Player 2 wins!" << endl;
+    }
 }
 void TicTacToe::playerVsPlayerOnline() {}
-
-
 TicTacToe::~TicTacToe() {
 }
 

@@ -19,7 +19,7 @@ A simple implementation of TicTacToe with options for Player vs AI, Player vs Pl
 2) CD into the debug directory
 3) Run the exe file
    ```bash
-   git clone https://github.com/Kaolin-Stacey/TicTacToe_CPP_ConsoleApp.git
+   git clone https://github.com/Kaolin-Stacey/TicTacToe_CPP.git
    cd TicTacToe/cmake-build-debug
    TicTacToe.exe
 

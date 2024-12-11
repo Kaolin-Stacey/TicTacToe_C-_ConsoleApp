@@ -4,7 +4,7 @@ A simple implementation of TicTacToe with options for Player vs AI, Player vs Pl
 
 ## Features
 
-- **Player vs AI**: Play against the AI (currently not implemented).
+- **Player vs AI**: Play against the AI.
 - **Player vs Player (Local)**: Play against another player on the same computer.
 - **Player vs Player (Online)**: Play against another player over the network (currently not implemented).
 - **Game Logic**: Includes row, column, and diagonal win checks.
@@ -26,7 +26,7 @@ A simple implementation of TicTacToe with options for Player vs AI, Player vs Pl
 ## How to Play
 ### Start the Game: Select the mode when prompted:
 
-- **1** for Player vs AI (Not implemented yet).
+- **1** for Player vs AI.
 - **2** for Player vs Player (Local).
 - **3** for Player vs Player (Online) (Not implemented yet).
 
@@ -43,7 +43,6 @@ The game ends when a player wins or when it’s a tie.
 ## Future Improvements
 ### Fix board: The board in the terminal does not look right
 ### Windowed App: Change the console app to a windowed app
-### AI Implementation: Add functionality for AI gameplay.
 ### Online Multiplayer: Implement network functionality for online play.
 
 # License

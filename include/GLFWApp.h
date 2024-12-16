@@ -1,7 +1,7 @@
 #ifndef GLFWApp_H
 #define GLFWAPP_H
 
-#include "./glfw3.h"
+#include "glfw3.h"
 #include <string>
 
 #pragma once

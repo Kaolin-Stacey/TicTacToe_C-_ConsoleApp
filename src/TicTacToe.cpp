@@ -2,7 +2,7 @@
 // Created by kaolin on 2024-12-10.
 //
 
-#include "../include/TicTacToe.h"
+#include "TicTacToe.h"
 //#include "../Network/Network.h"
 
 #include <iostream>

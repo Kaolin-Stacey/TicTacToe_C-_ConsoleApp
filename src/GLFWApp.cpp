@@ -1,4 +1,4 @@
-#include "../include/GLFWApp.h"
+#include "GLFWApp.h"
 #include <iostream>
 
 GLFWApp::GLFWApp(int width, int height, const std::string& title)

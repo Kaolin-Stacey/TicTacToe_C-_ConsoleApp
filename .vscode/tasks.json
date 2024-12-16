@@ -4,13 +4,7 @@
       {
         "label": "Build C++",
         "type": "shell",
-        "command": "g++",
-        "args": [
-          "-g",
-          "${file}",
-          "-o",
-          "${wokrspaceFolder}/build/${fileBasenameNoExtension}.exe"
-        ],
+        "command": "${workspaceFolder}/build.bat",
         "group": {
           "kind": "build",
           "isDefault": true

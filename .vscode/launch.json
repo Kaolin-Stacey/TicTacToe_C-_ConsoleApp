@@ -5,7 +5,7 @@
         "name": "Debug C++",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/build/${fileBasenameNoExtension}.exe",
+        "program": "${workspaceFolder}/build/TicTacToe.exe",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",

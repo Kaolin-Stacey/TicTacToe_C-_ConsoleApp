@@ -13,16 +13,10 @@ for %%f in (src\*.cpp) do (
     set SRC_FILES=!SRC_FILES! %%f
 )
 
-:: Set the ImGui source files
-set IMG_SRC=
-for %%f in (external\imgui\*.cpp) do (
-    echo Adding ImGui source file: %%f
-    set IMG_SRC=!IMG_SRC! %%f
-)
-
-for %%f in (external\imgui\backends\*.cpp) do (
-    echo Adding ImGui backend source file: %%f
-    set IMG_SRC=!IMG_SRC! %%f
+:: Add the FreeType source files from src
+for %%f in (external\freetype\src\**\*.c) do (
+    echo Adding FreeType source file: %%f
+    set SRC_FILES=!SRC_FILES! %%f
 )
 
 :: Show the full source list being compiled
@@ -31,14 +25,13 @@ echo Full source list: !SRC_FILES! !IMG_SRC!
 :: Compile and link the program with the necessary libraries
 g++ -g !SRC_FILES! !IMG_SRC! ^
     -Iinclude ^
-    -Iexternal\imgui ^
-    -Iexternal\imgui\backends ^
     -Iexternal\glfw ^
     -Llib ^
     -Lexternal\glfw\lib ^
     -lglfw3 ^
     -lopengl32 ^
     -lgdi32 ^
+    -Iexternal\freetype\include ^
     -o build\TicTacToe.exe
 
 :: End local environment

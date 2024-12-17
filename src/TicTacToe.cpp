@@ -13,6 +13,7 @@
 
 using namespace std;
 
+
 constexpr int WIN_WEIGHT = 200;
 constexpr int BLOCK_WEIGHT = 90; // the weight of blocking an opponent from a win
 constexpr int FORK_WEIGHT = 75; // not implemented
@@ -21,42 +22,45 @@ constexpr int CENTRE_WEIGHT = 75;
 constexpr int CORNER_WEIGHT = 40;
 constexpr int EDGE_WEIGHT = 10;
 
-TicTacToe::TicTacToe(char player1, char player2) {
+TicTacToe::TicTacToe(char player1, char player2){
     Player1 = player1;
     Player2 = player2;
     turn = 1;
 }
 void TicTacToe::start() {
-    // Check what the player wants to do
-    int option{};
+    // old console code 
 
-    cout << "Select an option:\n1) Player vs AI\n2) Player vs Player (Local)\n3) Player vs Player (Online)" << endl;
+    // Check what the player wants to do
+    // int option{};
+
+    // cout << "Select an option:\n1) Player vs AI\n2) Player vs Player (Local)\n3) Player vs Player (Online)" << endl;
 
     // Ensure that you get a valid option, and to continue asking until player chooses a valid option
-    while (true) {
-        if (!(cin >> option)) {
-            cout << "Invalid input! Please enter a valid integer: ";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-        else if (option < 1 || option>3) {
-            cout << "Input out of range! Please enter an integer between 1 and 3: ";
-        }
-        else break;
-    }
+    // while (true) {
+    //     if (!(cin >> option)) {
+    //         cout << "Invalid input! Please enter a valid integer: ";
+    //         cin.clear();
+    //         cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    //     }
+    //     else if (option < 1 || option>3) {
+    //         cout << "Input out of range! Please enter an integer between 1 and 3: ";
+    //     }
+    //     else break;
+    // }
 
-    switch (option) {
-    case 1:
-        playerVsAi();
-        break;
-    case 2:
-        playerVsPlayerLocal();
-        break;
-    case 3:
-        playerVsPlayerOnline();
-        break;
-    }
+    // switch (option) {
+    // case 1:
+    //     playerVsAi();
+    //     break;
+    // case 2:
+    //     playerVsPlayerLocal();
+    //     break;
+    // case 3:
+    //     playerVsPlayerOnline();
+    //     break;
+    // }
 }
+
 void TicTacToe::play(int row, int col) {
     board[row][col] = player();
 }

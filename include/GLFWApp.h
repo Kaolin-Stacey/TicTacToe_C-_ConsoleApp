@@ -3,8 +3,8 @@
 
 #include "glfw3.h"
 #include <string>
+#include "GameMode.h"
 
-#pragma once
 class GLFWApp
 {
 public:
@@ -22,8 +22,12 @@ private:
 	static void errorCallback(int error, const char* description);
 	static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+	void initImGui();
+	void cleanupImGui();
 	void initGLFW();
 	void mainLoop();
+
+	GameMode currentMode = GameMode::MainMenu;
 };
 
 #endif

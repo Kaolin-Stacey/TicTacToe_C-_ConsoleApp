@@ -1,17 +1,19 @@
-#pragma once
+#ifndef TICTACTOE_H
+#define TICTACTOE_H
+
 class TicTacToe
 {
 public:
 	TicTacToe(char player1 = 'X', char player2 = 'O');
 	void start();
 	~TicTacToe();
+    void playerVsAi();
+    void playerVsPlayerLocal();
+    void playerVsPlayerOnline();
 private:
 	char Player1;
 	char Player2;
 
-	void playerVsAi();
-    void playerVsPlayerLocal();
-    void playerVsPlayerOnline();
     char board[3][3] = { {' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '} };
     void play(int row, int col);
     int turn{};
@@ -32,3 +34,4 @@ private:
 
 };
 
+#endif
